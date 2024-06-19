@@ -1,0 +1,22 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/jwtauth
+    username: root
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+jwt:
+  header: Authorization
+  prefix: Bearer
+  secret: "1123456789"
+  accessExpiration: 271000
+  refreshExpiration: 604800
+
+server:
+  port: 8080
