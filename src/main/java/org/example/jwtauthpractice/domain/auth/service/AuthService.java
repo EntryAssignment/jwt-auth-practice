@@ -11,6 +11,7 @@ import org.example.jwtauthpractice.domain.user.facade.UserFacade;
 import org.example.jwtauthpractice.global.security.jwt.JwtTokenProvider;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,10 +24,12 @@ public class AuthService {
 
     private final JwtTokenProvider jwtTokenProvider;
 
+    @Transactional
     public void signup(SignupRequest signupRequest) {
         userRepository.save(User.builder().username(signupRequest.getUsername()).password(passwordEncoder.encode(signupRequest.getPassword())).build());
     }
 
+    @Transactional
     public TokenResponse login(LoginRequest request) {
         User user = userFacade.findByUsername(request.getUsername());
 

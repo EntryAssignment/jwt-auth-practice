@@ -10,6 +10,7 @@ import org.example.jwtauthpractice.domain.user.domain.User;
 import org.example.jwtauthpractice.domain.user.exception.UserNotAccessible;
 import org.example.jwtauthpractice.domain.user.facade.UserFacade;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -21,18 +22,21 @@ public class NoteService {
     private final NoteFacade noteFacade;
     private final UserFacade userFacade;
 
+    @Transactional
     public void createNote(NoteRequest noteRequest) {
         User user = userFacade.getCurrentUser();
         Note note = Note.of(noteRequest, user);
         noteRepository.save(note);
     }
 
+    @Transactional
     public List<NoteResponse> getNotes() {
         User user = userFacade.getCurrentUser();
         List<Note> notes = noteRepository.findByUserId(user.getId());
         return notes.stream().map(NoteResponse::of).toList();
     }
 
+    @Transactional
     public void updateNoteById(Long noteId, NoteRequest noteRequest) {
         User user = userFacade.getCurrentUser();
         Note note = noteFacade.findById(noteId);
@@ -41,10 +45,10 @@ public class NoteService {
             throw UserNotAccessible.EXCEPTION;
         }
 
-        note.update(noteRequest);
-        noteRepository.save(note);
+        note.updateNote(noteRequest);
     }
 
+    @Transactional
     public void deleteNoteById(Long noteId) {
         User user = userFacade.getCurrentUser();
         Note note = noteFacade.findById(noteId);

@@ -9,7 +9,10 @@ import java.util.Date;
 @Builder
 public class TokenResponse {
     private String accessToken;
+
     private String refreshToken;
+
     private Date accessExpiredAt;
+
     private Date refreshExpiredAt;
 }

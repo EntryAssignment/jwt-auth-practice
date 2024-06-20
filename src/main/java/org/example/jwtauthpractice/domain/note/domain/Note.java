@@ -18,14 +18,17 @@ public class Note {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "title", nullable = false)
     private String title;
+
+    @Column(name = "content", nullable = false)
     private String content;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public void update(NoteRequest noteRequest) {
+    public void updateNote(NoteRequest noteRequest) {
         this.title = noteRequest.getTitle();
         this.content = noteRequest.getContent();
     }

@@ -1,5 +1,6 @@
 package org.example.jwtauthpractice.domain.auth.presentation;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.jwtauthpractice.domain.auth.presentation.dto.request.LoginRequest;
 import org.example.jwtauthpractice.domain.auth.presentation.dto.request.SignupRequest;
@@ -17,12 +18,12 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/signup")
-    public void signup(@RequestBody SignupRequest signupRequest) {
+    public void signup(@RequestBody @Valid SignupRequest signupRequest) {
         authService.signup(signupRequest);
     }
 
     @PostMapping("/login")
-    public TokenResponse login(@RequestBody LoginRequest loginRequest) {
+    public TokenResponse login(@RequestBody @Valid LoginRequest loginRequest) {
         return authService.login(loginRequest);
     }
 }
